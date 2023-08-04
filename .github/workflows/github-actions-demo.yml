@@ -17,7 +17,7 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Get api token
-      - run: |
+        run: |
           API_TOKEN=${{ secrets.BLACK_DUCK_API_TOKEN }}
           echo "black duck api token"
 
