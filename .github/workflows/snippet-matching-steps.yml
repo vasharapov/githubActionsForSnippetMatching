@@ -1,9 +1,9 @@
-name: Fetch Changed Files1
+name: Snippet Matching
 
-on:
-  pull_request:
-    types:
-      - opened
+on: workflow_dispatch
+  # pull_request:
+  #   types:
+  #     - opened
 
 jobs:
   get_changed_files:
