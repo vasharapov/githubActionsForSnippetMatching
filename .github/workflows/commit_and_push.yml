@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3  
+        uses: actions/checkout@v2  
       
       - name: List of files 
         run: |
@@ -38,5 +38,6 @@ jobs:
           git commit -m "Adding license findings via GitHub Actions"
           echo "Print github ref ${GITHUB_REF}"
           git status
-          git push origin $GITHUB_REF
+          git branch
+          git push
                              
