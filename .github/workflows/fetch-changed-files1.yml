@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up api token
+        run: echo "API_TOKEN=${{ secrets.YOUR_SECRET_API_TOKEN }}" >> $GITHUB_ENV
+      - name: Fetch Bearer Token 
+        run: |
+          API_TOKEN="${API_TOKEN}"
+          RESPONSE=$(curl -X POST -H "Authorization: Bearer ${API_TOKEN}" "https://api.example.com/token") BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
+          echo "BEARER_TOKEN=${BEARER_TOKEN}" >> $GITHUB_ENV  
       - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Install dependencies
-        run: npm install @actions/github
+        uses: actions/checkout@v3  
       
       - name: List of files 
         run: |
@@ -29,3 +33,12 @@ jobs:
           for filename in $STRINGS; do
             echo "$filename"
           done
+       
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git commit -m "Adding license findings via GitHub Actions"
+          git push origin $GITHUB_REF
+                             
