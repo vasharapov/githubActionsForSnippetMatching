@@ -1,38 +1,42 @@
 name: Snippet Matching
 
-on: workflow_dispatch
-  # pull_request:
-  #   types:
-  #     - opened
+on:
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   get_changed_files:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up api token
-        run: echo "API_TOKEN=${{ secrets.YOUR_SECRET_API_TOKEN }}" >> $GITHUB_ENV
       - name: Fetch Bearer Token 
         run: |
-          API_TOKEN="${API_TOKEN}"
-          RESPONSE=$(curl -X POST -H "Authorization: Bearer ${API_TOKEN}" "https://api.example.com/token")
+          API_TOKEN=${{ secrets.BLACK_DUCK_API_TOKEN }}
+          RESPONSE=$(curl -k -X POST -H "Authorization: token ${API_TOKEN}" "https://HOSTNAME/api/tokens/authenticate")
           BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
           echo "BEARER_TOKEN=${BEARER_TOKEN}" >> $GITHUB_ENV  
       - name: Checkout code
         uses: actions/checkout@v3  
-      
-      - name: List of files 
+          with:
+            ref: ${{ github.event.pull_request.head.ref }}
+            token: ${{ secrets.WORKFLOW_GIT_ACCESS_TOKEN }}
+      - name: Get list of changed files 
         run: |
           URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
-          FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename' | tr '\n' ' ' | tr '/' '_')
+          FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename' | tr '\n' ' ')
           echo "FILES=${FILES}" >> $GITHUB_ENV
         
-      - name:
+      - name: Query for snippet matches
         run: |
-          STRINGS="${{ env.FILES }}"
+          rm -rf .licenses
+          mkdir .licenses
+          FILEPATHS="${{ env.FILES }}"
                                     
-          for filename in $STRINGS; do
-            echo "$filename"
+          for filepath in $FILEPATHS; do       
+            filename=$(echo "$filepath" | tr '/' '_')
+            echo "File path $filepath , file name $filename"
+            RES=$(curl -k --location --request POST "https://HOSTNAME/api/snippet-matching" --header "Authorization: Bearer ${BEARER_TOKEN}" --header "Content-Type: text/plain" --data-binary "@$filepath")
+            echo "$RES" | jq '.' > ".licenses/$filename"
           done
        
       - name: Commit and push changes
@@ -41,5 +45,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git commit -m "Adding license findings via GitHub Actions"
-          git push origin $GITHUB_REF
+          git push
                              
