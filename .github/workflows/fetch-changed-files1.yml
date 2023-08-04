@@ -1,0 +1,43 @@
+name: Fetch Changed Files1
+
+on:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  get_changed_files:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: npm install @actions/github
+
+      - name: Fetch Changed Files
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const prNumber = context.payload.pull_request.number;
+            const baseBranch = context.payload.pull_request.base.ref;
+
+            const response = await github.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: prNumber
+            });
+
+            const changedFiles = response.data.map(file => file.filename);
+
+            console.log('Changed files:');
+            console.log(changedFiles.join('\n'));
+
+            // Set the output for further use in the workflow
+            console.log(`::set-output name=changed_files::${changedFiles.join('\n')}`);
+      - name: Get snippet matches
+        run: |
+          for file in ${{ steps.fetch-changed-files.outputs.changed_files }}; do
+            echo "$file was changed"
+          done
