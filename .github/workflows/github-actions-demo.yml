@@ -1,6 +1,7 @@
 name: GitHub Actions Demo1
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on:
+  workflow_dispath: # This event will allow manual launch	
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
