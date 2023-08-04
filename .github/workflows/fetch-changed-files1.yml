@@ -26,6 +26,6 @@ jobs:
         run: |
           STRINGS="${{ env.FILES }}"
 		  
-		  for filename in $STRINGS; do
-		    echo "$filename"
-		  done
+          for filename in $STRINGS; do
+      	    echo "$filename"
+       	  done
