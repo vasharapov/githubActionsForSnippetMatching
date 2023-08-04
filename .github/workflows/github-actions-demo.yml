@@ -19,5 +19,5 @@ jobs:
       - name: Get api token
         run: |
           API_TOKEN=$(echo {{ secrets.BLACK_DUCK_API_TOKEN }})
-          echo "black duck api token ${{ secrets.BLACK_DUCK_API_TOKEN }}"
+          echo "black duck api token $API_TOKEN"
 
