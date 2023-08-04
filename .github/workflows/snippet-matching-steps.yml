@@ -15,7 +15,8 @@ jobs:
       - name: Fetch Bearer Token 
         run: |
           API_TOKEN="${API_TOKEN}"
-          RESPONSE=$(curl -X POST -H "Authorization: Bearer ${API_TOKEN}" "https://api.example.com/token") BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
+          RESPONSE=$(curl -X POST -H "Authorization: Bearer ${API_TOKEN}" "https://api.example.com/token")
+          BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
           echo "BEARER_TOKEN=${BEARER_TOKEN}" >> $GITHUB_ENV  
       - name: Checkout code
         uses: actions/checkout@v3  
