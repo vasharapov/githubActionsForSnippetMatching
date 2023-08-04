@@ -37,5 +37,6 @@ jobs:
           git add .
           git commit -m "Adding license findings via GitHub Actions"
           echo "Print github ref ${GITHUB_REF}"
+          git status
           git push origin $GITHUB_REF
                              
