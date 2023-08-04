@@ -15,29 +15,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install @actions/github
-
-      - name: Fetch Changed Files
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const prNumber = context.payload.pull_request.number;
-            const baseBranch = context.payload.pull_request.base.ref;
-
-            const response = await github.pulls.listFiles({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              pull_number: prNumber
-            });
-
-            const changedFiles = response.data.map(file => file.filename);
-
-            console.log('Changed files:');
-            console.log(changedFiles.join('\n'));
-
-            // Set the output for further use in the workflow
-            console.log(`::set-output name=changed_files::${changedFiles.join('\n')}`);
-      - name: Get snippet matches
+      
+	  - name: List of files 
         run: |
-          for file in ${{ steps.fetch-changed-files.outputs.changed_files }}; do
-            echo "$file was changed"
-          done
+          URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
+          FILES=$(curl -s -X GET -G $URL | jq -r '.[] | .filename')
+          echo $FILES
