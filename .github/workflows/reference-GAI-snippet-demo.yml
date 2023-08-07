@@ -1,4 +1,4 @@
-ame: Snippet Matching
+name: Snippet Analysys
 
 on:
   pull_request:
