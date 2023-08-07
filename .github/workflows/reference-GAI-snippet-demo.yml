@@ -5,7 +5,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  get_changed_files:
+  analyze-snippets:
  
     runs-on: ubuntu-latest
 
@@ -37,7 +37,7 @@ jobs:
             filename="${filename%.*}-snippet-analysys.json"
             echo "File path $filepath , file name $filename"
             RES=$(curl -k --location --request POST "https://${{ vars.HOSTNAME }}/api/snippet-matching" --header "Authorization: Bearer ${BEARER_TOKEN}" --header "Content-Type: text/plain" --data-binary "@$filepath")
-            echo "$RES" | jq '.' > ".licenses/$filename"
+            echo "$RES" | jq '.' > ".snippet-licenses/$filename"
           done
        
       - name: Commit and push changes
