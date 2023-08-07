@@ -6,12 +6,13 @@ on:
 
 jobs:
   get_changed_files:
+ 
     runs-on: ubuntu-latest
 
     steps:
       - name: Fetch Bearer Token 
         run: |
-          RESPONSE=$(curl -k -X POST -H "Authorization: token ${{ secrets.BLACK_DUCK_API_TOKEN }}" "https://snippet-matching-service.saas-staging.blackduck.com/api/tokens/authenticate")
+          RESPONSE=$(curl -k -X POST -H "Authorization: token ${{ secrets.BLACK_DUCK_API_TOKEN }}" "https://${{ vars.HOSTNAME }}/api/tokens/authenticate")
           BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
           echo "BEARER_TOKEN=${BEARER_TOKEN}" >> $GITHUB_ENV  
       - name: Checkout code
@@ -35,7 +36,7 @@ jobs:
             filename=$(echo "$filepath" | tr '/' '_')
             filename="${filename%.*}-snippet-analysys.json"
             echo "File path $filepath , file name $filename"
-            RES=$(curl -k --location --request POST "https://snippet-matching-service.saas-staging.blackduck.com/api/snippet-matching" --header "Authorization: Bearer ${BEARER_TOKEN}" --header "Content-Type: text/plain" --data-binary "@$filepath")
+            RES=$(curl -k --location --request POST "https://${{ vars.HOSTNAME }}/api/snippet-matching" --header "Authorization: Bearer ${BEARER_TOKEN}" --header "Content-Type: text/plain" --data-binary "@$filepath")
             echo "$RES" | jq '.' > ".licenses/$filename"
           done
        
