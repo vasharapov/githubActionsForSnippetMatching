@@ -3,7 +3,7 @@ name: License check
 on:
   push:
     paths:
-      - .snippet_licenses/**
+      - '.snippet_licenses/**'
 
 jobs:
   check-for-licenses:
