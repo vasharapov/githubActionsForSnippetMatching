@@ -1,0 +1,13 @@
+name: License check
+
+on:
+  push:
+    paths:
+      - .snippet_licenses/**
+
+jobs:
+  check-for-licenses:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check licenses
+        run: exit 1
