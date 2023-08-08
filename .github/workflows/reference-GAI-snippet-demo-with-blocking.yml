@@ -39,15 +39,14 @@ jobs:
             RES=$(curl -k --location --request POST "https://${{ vars.HOSTNAME }}/api/snippet-matching" --header "Authorization: Bearer ${BEARER_TOKEN}" --header "Content-Type: text/plain" --data-binary "@$filepath")
             echo "$RES" | jq '.' > ".snippet-licenses/$filename"
           done
-          FOUND_RESTRICTIVE_LICENSE=false
           snippetLicensesDir=.snippet-licenses
           if grep -q RECIPROCAL "$snippetLicensesDir"; then
             FOUND_RESTRICTIVE_LICENSE=true
+            echo "FOUND_RESTRICTIVE_LICENSE=${FOUND_RESTRICTIVE_LICENSE}" >> $GITHUB_ENV
           fi
-          echo "FOUND_RESTRICTIVE_LICENSE=${FOUND_RESTRICTIVE_LICENSE}" >> $GITHUB_ENV
                   
       - name: Commit and push changes
-        if: ${{ env.FOUND_RESTRICTIVE_LICENSE }} == true
+        if: ${{ env.FOUND_RESTRICTIVE_LICENSE }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
