@@ -1,4 +1,4 @@
-name: Snippet Analysys
+name: Snippet Analysis
 
 on:
   pull_request:
