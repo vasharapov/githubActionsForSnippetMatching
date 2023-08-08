@@ -1,6 +1,9 @@
 name: License check
 
-on: [push]
+on: 
+  push:
+    paths:
+    - 'sample/**'
 
 jobs:
   check-for-licenses:
