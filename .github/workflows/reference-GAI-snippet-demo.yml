@@ -47,4 +47,7 @@ jobs:
           git add .
           git commit -m "Adding license findings via GitHub Actions"
           git push
+      - name: Block pull request
+        run: exit 1
+        
                              
