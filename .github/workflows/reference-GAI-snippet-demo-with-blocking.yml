@@ -40,7 +40,7 @@ jobs:
             echo "$RES" | jq '.' > ".snippet-licenses/$filename"
           done
           snippetLicensesDir=.snippet-licenses
-          if grep -q RECIPROCAL "$snippetLicensesDir"; then
+          if grep -rq RECIPROCAL "$snippetLicensesDir"; then
             FOUND_RESTRICTIVE_LICENSE=true
             echo "FOUND_RESTRICTIVE_LICENSE=${FOUND_RESTRICTIVE_LICENSE}" >> $GITHUB_ENV
           fi
