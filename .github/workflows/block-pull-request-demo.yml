@@ -11,12 +11,11 @@ jobs:
     steps:
       - name: Check licenses
         run: |
-
-        File=.snippet-licenses
-        if grep -rq RECIPROCAL "$File"; then
-          exit 1
-        fi
-
-        if grep -rq RECIPROCAL_AGPL "$File"; then
-          exit 1
-        fi
+          File=.snippet-licenses
+          if grep -rq RECIPROCAL "$File"; then
+            exit 1
+          fi
+          
+          if grep -rq RECIPROCAL_AGPL "$File"; then
+            exit 1
+          fi
