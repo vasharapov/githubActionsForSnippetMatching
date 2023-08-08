@@ -1,9 +1,6 @@
 name: License check
 
-on:
-  push:
-    paths:
-      - '.snippet_licenses/**'
+on: [push]
 
 jobs:
   check-for-licenses:
