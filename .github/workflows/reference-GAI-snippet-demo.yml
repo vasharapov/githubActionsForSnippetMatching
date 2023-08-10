@@ -15,11 +15,13 @@ jobs:
           RESPONSE=$(curl -k -X POST -H "Authorization: token ${{ secrets.BLACK_DUCK_API_TOKEN }}" "https://${{ vars.HOSTNAME }}/api/tokens/authenticate")
           BEARER_TOKEN=$(echo "${RESPONSE}" | jq -r '.bearerToken')
           echo "BEARER_TOKEN=${BEARER_TOKEN}" >> $GITHUB_ENV  
+      
       - name: Checkout code
         uses: actions/checkout@v3  
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           token: ${{ secrets.WORKFLOW_GIT_ACCESS_TOKEN }}
+      
       - name: Get list of changed files 
         run: |
           URL="https://api.github.com/repos/${GITHUB_REPOSITORY}/pulls/${{ github.event.pull_request.number }}/files"
