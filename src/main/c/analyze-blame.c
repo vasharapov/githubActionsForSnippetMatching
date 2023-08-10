@@ -48,6 +48,10 @@ int verb_blame(int argc, char *argv[], void *userdata) {
         if (r < 0)
                 return r;
 
+        r = table_set_summary(table, 0, true);
+        if (r < 0)
+                return r;
+
         for (UnitTimes *u = times; u->has_data; u++) {
                 if (u->time <= 0)
                         continue;
