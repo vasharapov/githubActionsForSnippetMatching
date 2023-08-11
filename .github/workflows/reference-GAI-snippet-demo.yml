@@ -5,8 +5,7 @@ on:
     types: [opened, reopened]
 
 jobs:
-  analyze-snippets:
- 
+  analyze-snippets: 
     runs-on: ubuntu-latest
     steps:
       - name: Fetch Bearer Token 
