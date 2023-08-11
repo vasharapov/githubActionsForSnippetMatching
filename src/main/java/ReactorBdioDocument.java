@@ -16,7 +16,6 @@ import com.blackducksoftware.bdio2.EmitterFactory;
 import reactor.core.publisher.EmitterProcessor;
 import reactor.core.publisher.Flux;
 
-
 public class ReactorBdioDocument extends BdioDocument {
 
     public ReactorBdioDocument(BdioContext context) {
