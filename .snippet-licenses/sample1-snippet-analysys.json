@@ -1,0 +1,65 @@
+{
+  "snippetMatches": {
+    "PERMISSIVE": [
+      {
+        "projectName": "github.com/blackducksoftware/hub-client-go",
+        "releaseVersion": "v0.9.5",
+        "licenseDefinition": {
+          "name": "Apache License 2.0",
+          "spdxId": "Apache-2.0",
+          "ownership": "OPEN_SOURCE",
+          "licenseDisplayName": "Apache License 2.0"
+        },
+        "matchedFilePath": "/hub-client-go-2f6fd982be4625b8a4f3cae6ede2ec29bb1fc420/hubapi/codelocations-api.go",
+        "regions": {
+          "sourceStartLines": [
+            8
+          ],
+          "sourceEndLines": [
+            51
+          ],
+          "matchedStartLines": [
+            22
+          ],
+          "matchedEndLines": [
+            64
+          ]
+        }
+      },
+      {
+        "projectName": "github.com/blackducksoftware/hub-client-go",
+        "releaseVersion": "v0.9.6",
+        "licenseDefinition": {
+          "name": "Apache License 2.0",
+          "spdxId": "Apache-2.0",
+          "ownership": "OPEN_SOURCE",
+          "licenseDisplayName": "Apache License 2.0"
+        },
+        "matchedFilePath": "/hub-client-go-a97c875558e7868d7af37727677cfb74b6cf69b3/hubapi/codelocations-api.go",
+        "regions": {
+          "sourceStartLines": [
+            8
+          ],
+          "sourceEndLines": [
+            51
+          ],
+          "matchedStartLines": [
+            22
+          ],
+          "matchedEndLines": [
+            65
+          ]
+        }
+      }
+    ]
+  },
+  "_meta": {
+    "href": "https://snippet-matching-service.saas-staging.blackduck.com/api/snippet-matching",
+    "links": [
+      {
+        "rel": "licenses-description",
+        "href": "https://www.synopsys.com/glossary/what-are-open-source-licenses.html"
+      }
+    ]
+  }
+}
